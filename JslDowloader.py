@@ -47,9 +47,12 @@ rdf18_defence = rdf30_defence.head(TOP_RANGE)
 rdf18_defence.loc['TOTAL', 'price'] = rdf18_defence.price.mean()
 rdf18_defence.loc['TOTAL', 'premium_rt'] = rdf18_defence.premium_rt.mean()
 #output to csv
-rdf.to_csv('jsl.rlst.csv', sep='\t', encoding='utf-8')
-rdf18_attack.to_csv('jsl.attack.18.csv', sep='\t', encoding='utf-8')
-rdf18_defence.to_csv('jsl.defence.18.csv', sep='\t', encoding='utf-8')
+# rdf.to_csv('jsl.rlst.csv', sep='\t', encoding='utf-8')
+# rdf18_attack.to_csv('jsl.attack.18.csv', sep='\t', encoding='utf-8')
+# rdf18_defence.to_csv('jsl.defence.18.csv', sep='\t', encoding='utf-8')
+rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
+rdf18_attack.to_csv('jsl.attack.18.csv', encoding='utf-8')
+rdf18_defence.to_csv('jsl.defence.18.csv', encoding='utf-8')
 
 top18_attack = set(rdf18_attack.bond_id.tolist())
 top18_defence = set(rdf18_defence.bond_id.tolist())
@@ -61,7 +64,7 @@ exist_df = rdf.loc[rdf.bond_id.isin(exist_bonds), :]
 exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
 exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
-exist_df.to_csv('jsl.existing.18.csv', sep='\t', encoding='utf-8')
+exist_df.to_csv('jsl.existing.18.csv', encoding='utf-8')
 
 target_bonds = top18_defence
 sell_bonds = exist_bonds - top18_defence
