@@ -19,7 +19,7 @@ jdf = pd.DataFrame.from_dict(cbonds)        # jisilu df
 jdf.bond_id = jdf.bond_id.astype(str)
 
 
-rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'premium_rt', 'ytm_rt', 'year_left']]
+rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'ytm_rt', 'year_left']]
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
