@@ -1,10 +1,10 @@
 import pandas as pd
-import tushare as ts
-import numpy as np
+# import tushare as ts
+# import numpy as np
 import requests
 import time
-import json
-import matplotlib.pyplot as plt
+# import json
+# import matplotlib.pyplot as plt
 exclude_bonds = []
 SELECT_RANGE = 30
 TOP_RANGE = 18
@@ -19,7 +19,7 @@ jdf = pd.DataFrame.from_dict(cbonds)        # jisilu df
 jdf.bond_id = jdf.bond_id.astype(str)
 
 
-rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'ytm_rt', 'year_left']]
+rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'ytm_rt', 'year_left', 'curr_iss_amt']]
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
@@ -83,7 +83,7 @@ print buy_df
 
 
 
-# jdf.plot()
+# rdf.plot()
 # plt.show()
 
 
