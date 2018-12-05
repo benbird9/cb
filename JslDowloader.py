@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import time
 # import json
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 exclude_bonds = []
 SELECT_RANGE = 30
 TOP_RANGE = 18
