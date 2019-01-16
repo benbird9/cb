@@ -6,7 +6,7 @@ import time
 # import json
 import matplotlib.pyplot as plt
 exclude_bonds = []
-SELECT_RANGE = 30
+SELECT_RANGE = 40
 TOP_RANGE = 18
 
 jisiluUrl = "https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=" + str(time.time())
