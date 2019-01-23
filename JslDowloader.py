@@ -38,6 +38,7 @@ rdf['sum'] = rdf.attack + rdf.defence
 rdf.sort_values(by=['sum'], ascending=False, inplace=True)
 rdf.reset_index(drop=True, inplace=True)
 
+
 rdf30_attack = rdf.copy().head(SELECT_RANGE)
 rdf30_attack.sort_values(by=['attack'], ascending=False, inplace=True)
 rdf18_attack = rdf30_attack.head(TOP_RANGE)
@@ -53,7 +54,11 @@ rdf18_defence.loc['TOTAL', 'premium_rt'] = rdf18_defence.premium_rt.mean()
 # rdf.to_csv('jsl.rlst.csv', sep='\t', encoding='utf-8')
 # rdf18_attack.to_csv('jsl.attack.18.csv', sep='\t', encoding='utf-8')
 # rdf18_defence.to_csv('jsl.defence.18.csv', sep='\t', encoding='utf-8')
-rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
+
+replica_rdf = rdf.copy()
+replica_rdf.loc['TOTAL', 'price'] = replica_rdf.price.mean()
+replica_rdf.loc['TOTAL', 'premium_rt'] = replica_rdf.premium_rt.mean()
+replica_rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
 rdf18_attack.to_csv('jsl.attack.18.csv', encoding='utf-8')
 rdf18_defence.to_csv('jsl.defence.18.csv', encoding='utf-8')
 
