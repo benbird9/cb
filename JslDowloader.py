@@ -75,8 +75,8 @@ exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
 exist_df.to_csv('jsl.existing.18.csv', encoding='utf-8')
 
-# target_bonds = top18_attack
-target_bonds = top18_defence
+target_bonds = top18_attack
+# target_bonds = top18_defence
 sell_bonds = exist_bonds - target_bonds
 buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
