@@ -34,6 +34,8 @@ rdf.price = rdf.price.astype('float')
 rdf['yield100'] = rdf.apply(lambda r: round((100 - r.price)/r.year_left, 2), axis =1)
 rdf['attack'] = rdf.apply(lambda r: round(100 - 2.5*r.premium_rt, 2), axis =1)
 rdf['defence'] = rdf.apply(lambda r: round(33.33*r.yield100, 2), axis =1)
+# rdf['attack'] = rdf.apply(lambda r: round(100 - 2.5*r.premium_rt, 2), axis =1)
+# rdf['defence'] = rdf.apply(lambda r: round(33.33*r.ytm_rt, 2), axis =1)
 rdf['sum'] = rdf.attack + rdf.defence
 rdf.sort_values(by=['sum'], ascending=False, inplace=True)
 rdf.reset_index(drop=True, inplace=True)
