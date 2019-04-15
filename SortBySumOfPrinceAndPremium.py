@@ -18,8 +18,8 @@ for r in data['rows']:
 jdf = pd.DataFrame.from_dict(cbonds)        # jisilu df
 jdf.bond_id = jdf.bond_id.astype(str)
 
-
-rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','pb','year_left',  'curr_iss_amt',  'convert_cd',]]
+#origin raw data
+rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','pb','year_left',  'curr_iss_amt',  'convert_cd']]
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
@@ -43,6 +43,7 @@ rdf18_attack = rdf30_attack.head(TOP_RANGE)
 rdf18_attack.loc['TOTAL', 'price'] = rdf18_attack.price.mean()
 rdf18_attack.loc['TOTAL', 'premium_rt'] = rdf18_attack.premium_rt.mean()
 
+#top18 rdfs
 rdf30_defence = rdf.copy().head(SELECT_RANGE)
 rdf30_defence.sort_values(by=['price'], ascending=True, inplace=True)
 rdf18_defence = rdf30_defence.head(TOP_RANGE)
@@ -52,10 +53,6 @@ rdf18_defence.loc['TOTAL', 'premium_rt'] = rdf18_defence.premium_rt.mean()
 rdf18 = rdf.copy().head(TOP_RANGE)
 rdf18.loc['TOTAL', 'price'] = rdf18.price.mean()
 rdf18.loc['TOTAL', 'premium_rt'] = rdf18.premium_rt.mean()
-#output to csv
-# rdf.to_csv('jsl.rlst.csv', sep='\t', encoding='utf-8')
-# rdf18_attack.to_csv('jsl.attack.18.csv', sep='\t', encoding='utf-8')
-# rdf18_defence.to_csv('jsl.defence.18.csv', sep='\t', encoding='utf-8')
 
 replica_rdf = rdf.copy()
 replica_rdf.loc['TOTAL', 'price'] = replica_rdf.price.mean()
@@ -64,6 +61,7 @@ replica_rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
 rdf18_attack.to_csv('jsl.attack.18.csv', encoding='utf-8')
 rdf18_defence.to_csv('jsl.defence.18.csv', encoding='utf-8')
 
+#sell and buy
 top18_attack = set(rdf18_attack.bond_id.tolist())
 top18_defence = set(rdf18_defence.bond_id.tolist())
 top18 = set(rdf18.bond_id.tolist())
@@ -76,6 +74,7 @@ exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
 exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
+exist_df.loc['TOTAL','sum'] = exist_df.loc['TOTAL', 'price'] + exist_df.loc['TOTAL', 'premium_rt']
 exist_df.to_csv('jsl.existing.18.csv', encoding='utf-8')
 
 # target_bonds = top18_attack
