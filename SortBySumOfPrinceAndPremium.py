@@ -100,9 +100,9 @@ print 'buy:'
 print buy_df
 
 special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
-plt.plot(rdf['price'], rdf['premium_rt'], 'r+')
-plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'rx')
-plt.plot(exist_df['price'], exist_df['premium_rt'], 'bo')
+plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
+plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
+plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
 plt.axis([80, 150, -10, 60])
 plt.savefig('pic/'+ TODAY + '.png')
 
