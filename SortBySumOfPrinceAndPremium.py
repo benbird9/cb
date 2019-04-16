@@ -5,12 +5,13 @@ import requests
 import time
 from datetime import datetime
 # import json
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 exclude_bonds = []
-SELECT_RANGE = 40
+SELECT_RANGE = 30
 TOP_RANGE = 18
 TODAY = datetime.today().strftime('%Y-%m-%d')
+FACTOR = 1
 
 jisiluUrl = "https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=" + str(time.time())
 resp = requests.get(url=jisiluUrl)
@@ -35,7 +36,7 @@ rdf.ytm_rt = rdf.apply(lambda r: round(r.ytm_rt, 2), axis=1)
 rdf.year_left = rdf.year_left.astype('float')
 rdf.price = rdf.price.astype('float')
 
-rdf['sum'] = 200 - rdf.price - rdf.premium_rt
+rdf['sum'] = 200 - rdf.price - FACTOR * rdf.premium_rt
 rdf.sort_values(by=['sum'], ascending=False, inplace=True)
 rdf.reset_index(drop=True, inplace=True)
 
@@ -88,7 +89,7 @@ top18 = set(rdf18.bond_id.tolist())
 
 # target_bonds = top18_attack
 target_bonds = top18_defence
-# target_bonds = top18
+#target_bonds = top18
 sell_bonds = exist_bonds - target_bonds
 buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
@@ -99,12 +100,12 @@ print sell_df
 print 'buy:'
 print buy_df
 
-special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
-plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
-plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
-plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
-plt.axis([80, 150, -10, 60])
-plt.savefig('pic/'+ TODAY + '.png')
+# special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
+# plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
+# plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
+# plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
+# plt.axis([80, 150, -10, 60])
+# plt.savefig('pic/'+ TODAY + '.png')
 
 
 
