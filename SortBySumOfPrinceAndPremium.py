@@ -3,11 +3,14 @@ import pandas as pd
 # import numpy as np
 import requests
 import time
+from datetime import datetime
 # import json
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
 exclude_bonds = []
 SELECT_RANGE = 40
 TOP_RANGE = 18
+TODAY = datetime.today().strftime('%Y-%m-%d')
 
 jisiluUrl = "https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=" + str(time.time())
 resp = requests.get(url=jisiluUrl)
@@ -19,7 +22,7 @@ jdf = pd.DataFrame.from_dict(cbonds)        # jisilu df
 jdf.bond_id = jdf.bond_id.astype(str)
 
 #origin raw data
-rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','pb','year_left',  'curr_iss_amt',  'convert_cd']]
+rdf = jdf.loc[(jdf.btype=='C')&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','year_left', 'curr_iss_amt',  'convert_cd']]
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
@@ -57,14 +60,6 @@ rdf18.loc['TOTAL', 'premium_rt'] = rdf18.premium_rt.mean()
 replica_rdf = rdf.copy()
 replica_rdf.loc['TOTAL', 'price'] = replica_rdf.price.mean()
 replica_rdf.loc['TOTAL', 'premium_rt'] = replica_rdf.premium_rt.mean()
-replica_rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
-rdf18_attack.to_csv('jsl.attack.18.csv', encoding='utf-8')
-rdf18_defence.to_csv('jsl.defence.18.csv', encoding='utf-8')
-
-#sell and buy
-top18_attack = set(rdf18_attack.bond_id.tolist())
-top18_defence = set(rdf18_defence.bond_id.tolist())
-top18 = set(rdf18.bond_id.tolist())
 
 with open('existing_bonds.txt') as f:
     exist_bonds = f.readlines()
@@ -74,8 +69,22 @@ exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
 exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
-exist_df.loc['TOTAL','sum'] = exist_df.loc['TOTAL', 'price'] + exist_df.loc['TOTAL', 'premium_rt']
+exist_df.loc['TOTAL','sum'] = exist_df['sum'].mean()
+
+replica_rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
+rdf18_attack.to_csv('jsl.attack.18.csv', encoding='utf-8')
+rdf18_defence.to_csv('jsl.defence.18.csv', encoding='utf-8')
 exist_df.to_csv('jsl.existing.18.csv', encoding='utf-8')
+#save to data folder
+replica_rdf.to_csv('data/' + TODAY + '.jsl.rlst.csv', encoding='utf-8')
+rdf18_attack.to_csv('data/' + TODAY + '.jsl.attack.18.csv', encoding='utf-8')
+rdf18_defence.to_csv('data/' + TODAY + '.jsl.defence.18.csv', encoding='utf-8')
+exist_df.to_csv('data/' + TODAY + '.jsl.existing.18.csv', encoding='utf-8')
+
+#sell and buy
+top18_attack = set(rdf18_attack.bond_id.tolist())
+top18_defence = set(rdf18_defence.bond_id.tolist())
+top18 = set(rdf18.bond_id.tolist())
 
 # target_bonds = top18_attack
 target_bonds = top18_defence
@@ -90,10 +99,12 @@ print sell_df
 print 'buy:'
 print buy_df
 
-
-
-# rdf.plot()
-# plt.show()
+special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
+plt.plot(rdf['price'], rdf['premium_rt'], 'r+')
+plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'rx')
+plt.plot(exist_df['price'], exist_df['premium_rt'], 'bo')
+plt.axis([80, 150, -10, 60])
+plt.savefig('pic/'+ TODAY + '.png')
 
 
 
