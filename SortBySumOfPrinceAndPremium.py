@@ -5,13 +5,13 @@ import requests
 import time
 from datetime import datetime
 # import json
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 exclude_bonds = []
 SELECT_RANGE = 30
 TOP_RANGE = 18
 TODAY = datetime.today().strftime('%Y-%m-%d')
-FACTOR = 1
+FACTOR = 1    # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
 jisiluUrl = "https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=" + str(time.time())
 resp = requests.get(url=jisiluUrl)
@@ -70,7 +70,6 @@ exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
 exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
-exist_df.loc['TOTAL','sum'] = exist_df['sum'].mean()
 
 replica_rdf.to_csv('jsl.rlst.csv', encoding='utf-8')
 rdf18_attack.to_csv('jsl.attack.18.csv', encoding='utf-8')
@@ -88,8 +87,8 @@ top18_defence = set(rdf18_defence.bond_id.tolist())
 top18 = set(rdf18.bond_id.tolist())
 
 # target_bonds = top18_attack
-target_bonds = top18_defence
-#target_bonds = top18
+# target_bonds = top18_defence
+target_bonds = top18
 sell_bonds = exist_bonds - target_bonds
 buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
@@ -100,12 +99,12 @@ print sell_df
 print 'buy:'
 print buy_df
 
-# special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
-# plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
-# plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
-# plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
-# plt.axis([80, 150, -10, 60])
-# plt.savefig('pic/'+ TODAY + '.png')
+special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
+plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
+plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
+plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
+plt.axis([80, 150, -10, 60])
+plt.savefig('pic/'+ TODAY + '.png')
 
 
 
