@@ -87,8 +87,8 @@ top18_defence = set(rdf18_defence.bond_id.tolist())
 top18 = set(rdf18.bond_id.tolist())
 
 # target_bonds = top18_attack
-# target_bonds = top18_defence
-target_bonds = top18
+target_bonds = top18_defence
+# target_bonds = top18
 sell_bonds = exist_bonds - target_bonds
 buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
@@ -104,6 +104,9 @@ plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
 plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
 plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
 plt.axis([80, 150, -10, 60])
+plt.title(TODAY)
+plt.xlabel('price')
+plt.ylabel('premium_rt')
 plt.savefig('pic/'+ TODAY + '.png')
 
 
