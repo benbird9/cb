@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 TODAY = datetime.today().strftime('%Y-%m-%d')
 
-os.system('cd \\a_yu_workdir\project\sourcecode\cb')
+os.chdir('\\a_yu_workdir\project\sourcecode\cb')
 os.system('python SortBySumOfPrinceAndPremium.py')
 
 repo = git.Repo('\\a_yu_workdir\project\sourcecode\cb')
