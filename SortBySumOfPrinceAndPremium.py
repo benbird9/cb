@@ -104,9 +104,9 @@ plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
 plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
 plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
 plt.axis([80, 150, -10, 60])
-plt.title(TODAY)
+plt.title(datetime.now().strftime("%Y-%m-%d %I:%M:%S"))
 plt.xlabel('price')
-plt.ylabel('premium_rt')
+plt.ylabel('premium_ratio')
 plt.savefig('pic/'+ TODAY + '.png')
 
 
