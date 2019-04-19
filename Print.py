@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 FULL_DATA_FILE_PATH = './jsl.rlst.csv'
-PARTIAL_FILE_PATH = './1.csv'    # only read bond_id from the file
+PARTIAL_FILE_PATH = './jsl.existing.18.csv'    # only read bond_id from the file
 
 rdf = pd.read_csv(FULL_DATA_FILE_PATH, dtype={'bond_id': object}, encoding='utf-8', index_col=0)
 rdf.drop(rdf.tail(1).index, inplace=True)
