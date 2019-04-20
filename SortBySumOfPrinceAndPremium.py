@@ -107,6 +107,7 @@ plt.axis([80, 150, -10, 60])
 plt.title(datetime.now().strftime("%Y-%m-%d %I:%M:%S"))
 plt.xlabel('price')
 plt.ylabel('premium_ratio')
+plt.grid(True)
 plt.savefig('pic/'+ TODAY + '.png')
 
 
