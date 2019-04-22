@@ -108,7 +108,6 @@ plt.title(datetime.now().strftime("%Y-%m-%d %I:%M:%S"))
 plt.xlabel('price')
 plt.ylabel('premium_ratio')
 plt.grid(True)
-plt.savefig('pic/'+ TODAY + '.png', dpi=300)
-
+plt.savefig('pic/'+ TODAY + '.png', dpi=150)
 
 
