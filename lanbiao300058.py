@@ -28,7 +28,7 @@ def send_email(df):
     import smtplib
     from email.mime.text import MIMEText
     _user = "10314731@qq.com"
-    _pwd = "liyekxqicqntcacj"
+    _pwd = "liyekxqicqnt"
     _to = "10314731@qq.com"
 
     msg = MIMEText(df.to_string())
