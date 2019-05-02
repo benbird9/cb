@@ -113,5 +113,7 @@ plt.xlabel('price')
 plt.ylabel('premium_ratio')
 plt.grid(True)
 plt.savefig('pic/'+ TODAY + '.png')
+plt.savefig('output/latest.png')
+
 
 
