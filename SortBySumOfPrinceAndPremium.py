@@ -76,10 +76,14 @@ rdf18_attack.to_csv('output/jsl.attack.18.csv', encoding='utf-8')
 rdf18_defence.to_csv('output/jsl.defence.18.csv', encoding='utf-8')
 exist_df.to_csv('output/jsl.existing.18.csv', encoding='utf-8')
 #save to data folder
-replica_rdf.to_csv('data/' + TODAY + '.jsl.rlst.csv', encoding='utf-8')
-rdf18_attack.to_csv('data/' + TODAY + '.jsl.attack.18.csv', encoding='utf-8')
-rdf18_defence.to_csv('data/' + TODAY + '.jsl.defence.18.csv', encoding='utf-8')
-exist_df.to_csv('data/' + TODAY + '.jsl.existing.18.csv', encoding='utf-8')
+import os
+datadir = 'data/' + str(datetime.today().year) + '-' + str(datetime.today().month) + '/'
+if not os.path.exists(datadir):
+    os.makedirs(datadir)
+replica_rdf.to_csv(datadir + TODAY + '.jsl.rlst.csv', encoding='utf-8')
+rdf18_attack.to_csv(datadir + TODAY + '.jsl.attack.18.csv', encoding='utf-8')
+rdf18_defence.to_csv(datadir + TODAY + '.jsl.defence.18.csv', encoding='utf-8')
+exist_df.to_csv(datadir + TODAY + '.jsl.existing.18.csv', encoding='utf-8')
 
 #sell and buy
 top18_attack = set(rdf18_attack.bond_id.tolist())

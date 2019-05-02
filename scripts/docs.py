@@ -1,7 +1,7 @@
 # coding:utf-8
 
 from docx import Document
-from docx.shared import Inches
+from docx.shared import Inches, Pt
 
 
 def genExpr():
@@ -24,12 +24,13 @@ def genExpr():
 document = Document()
 
 for k in range(0, 20):
-    document.add_heading('Date: __________         Score:_________', 0)
+    document.add_heading('Date: __________', 0)
     table = document.add_table(rows=0, cols=3)
     for i in range(0, 20):
         row_cells = table.add_row().cells
         for j in range(0, 3):
             row_cells[j].text = genExpr()
+
     document.add_page_break()
 
 

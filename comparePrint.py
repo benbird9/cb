@@ -1,8 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-FROM_FILE_PATH = './data/2019-04-17.jsl.existing.18.csv'
-TO_FILE_PATH = './data/2019-04-18.jsl.existing.18.csv'    
+FROM_FILE_PATH = './data/2019-04-19.jsl.existing.18.csv'
+TO_FILE_PATH = './data/2019-04-30.jsl.existing.18.csv'
 
 from_rdf = pd.read_csv(FROM_FILE_PATH, dtype={'bond_id': object}, encoding='utf-8', index_col=0)
 from_rdf.drop(from_rdf.tail(1).index, inplace=True)
