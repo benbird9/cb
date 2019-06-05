@@ -9,7 +9,7 @@ past_3_years_df = csv.loc[csv.Date > datetime.datetime(2016, 5, 17).date(), :]
 
 list = past_3_years_df.Close.tolist()
 for i in range(245):
-    list.append(4000.0)
+    list.append(3500.0)
 print list
 list_b = [(lambda x: 1/x)(i) for i in list]
 print list_b
