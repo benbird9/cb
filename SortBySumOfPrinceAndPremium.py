@@ -8,7 +8,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 exclude_bonds = []
-SELECT_RANGE = 30
+SELECT_RANGE = 40
 TOP_RANGE = 18
 TODAY = datetime.today().strftime('%Y-%m-%d')
 FACTOR = 1    # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
