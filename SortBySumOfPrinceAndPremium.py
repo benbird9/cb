@@ -11,7 +11,7 @@ exclude_bonds = []
 SELECT_RANGE = 40
 TOP_RANGE = 18
 TODAY = datetime.today().strftime('%Y-%m-%d')
-FACTOR = 0.75    # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
+FACTOR = 1    # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
 jisiluUrl = "https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=" + str(time.time())
 resp = requests.get(url=jisiluUrl)
