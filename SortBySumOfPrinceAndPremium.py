@@ -13,6 +13,10 @@ TOP_RANGE = 18
 TODAY = datetime.today().strftime('%Y-%m-%d')
 FACTOR = 1    # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+
 jisiluUrl = "https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=" + str(time.time())
 resp = requests.get(url=jisiluUrl)
 data = resp.json()
