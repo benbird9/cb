@@ -7,10 +7,11 @@ from datetime import datetime
 # import json
 import matplotlib.pyplot as plt
 
-exclude_bonds = []
+
 SELECT_RANGE = 40
 TOP_RANGE = 18
 PB_THRESHOLD = 1.3
+ISSUE_AMT_THRESHOLD = 3.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
 FACTOR = 0.75   # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
@@ -28,7 +29,7 @@ jdf = pd.DataFrame.from_dict(cbonds)        # jisilu df
 jdf.bond_id = jdf.bond_id.astype(str)
 
 #origin raw data
-rdf = jdf.loc[(~jdf.bond_nm.str.contains('EB'))&( ~jdf.bond_id.isin(exclude_bonds))&(jdf.price!='100.000')&(jdf.curr_iss_amt>=0.5), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','year_left', 'pb', 'curr_iss_amt',  'convert_cd']]
+rdf = jdf.loc[(~jdf.bond_nm.str.contains('EB'))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','year_left', 'pb', 'curr_iss_amt',  'convert_cd']]
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
@@ -41,22 +42,23 @@ rdf.ytm_rt = rdf.apply(lambda r: round(r.ytm_rt, 2), axis=1)
 rdf.year_left = rdf.year_left.astype('float')
 rdf.price = rdf.price.astype('float')
 rdf.pb = rdf.pb.astype('float')
+rdf.curr_iss_amt = rdf.curr_iss_amt.astype('float')
 
 rdf['sum'] = 200 - rdf.price - FACTOR * rdf.premium_rt
 rdf.sort_values(by=['sum'], ascending=False, inplace=True)
 rdf.reset_index(drop=True, inplace=True)
 
-# filter out the low pb
-rdf_without_low_pb = rdf.loc[(rdf.pb>PB_THRESHOLD), :]
+# filter out the low pb and low issue amount
+rdf_with_filters = rdf.loc[(rdf.pb >= PB_THRESHOLD) & (rdf.curr_iss_amt >= ISSUE_AMT_THRESHOLD), :]
 
-rdf30_attack = rdf_without_low_pb.copy().head(SELECT_RANGE)
+rdf30_attack = rdf_with_filters.copy().head(SELECT_RANGE)
 rdf30_attack.sort_values(by=['premium_rt'], ascending=True, inplace=True)
 rdf18_attack = rdf30_attack.head(TOP_RANGE)
 rdf18_attack.loc['TOTAL', 'price'] = rdf18_attack.price.mean()
 rdf18_attack.loc['TOTAL', 'premium_rt'] = rdf18_attack.premium_rt.mean()
 
 #top18 rdfs
-rdf30_defence = rdf_without_low_pb.copy().head(SELECT_RANGE)
+rdf30_defence = rdf_with_filters.copy().head(SELECT_RANGE)
 rdf30_defence.sort_values(by=['price'], ascending=True, inplace=True)
 rdf18_defence = rdf30_defence.head(TOP_RANGE)
 rdf18_defence.loc['TOTAL', 'price'] = rdf18_defence.price.mean()
