@@ -3,15 +3,15 @@ from datetime import datetime
 import os
 TODAY = datetime.today().strftime('%Y-%m-%d')
 
-repo = git.Repo('\\a_yu_workdir\project\sourcecode\cb')
+repo = git.Repo('\\workdir_yuqi\git_src\cb')
 git = repo.git
 git.execute('git fetch origin master')
-git.execute('git reset --hard origin/master')
+#git.execute('git reset --hard origin/master')
 
-# os.chdir('\\a_yu_workdir\project\sourcecode\cb')
+# os.chdir('\\workdir_yuqi\git_src\cb')
 # os.system('python SortBySumOfPrinceAndPremium.py')
 import subprocess
-result = subprocess.check_output('python SortBySumOfPrinceAndPremium.py', shell=True, cwd='\\a_yu_workdir\project\sourcecode\cb')
+result = subprocess.check_output('python SortBySumOfPrinceAndPremium.py', shell=True, cwd='\\workdir_yuqi\git_src\cb')
 
 
 git.execute('git add -A')
