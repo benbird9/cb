@@ -5,7 +5,7 @@ TODAY = datetime.today().strftime('%Y-%m-%d')
 
 repo = git.Repo('\\workdir_yuqi\git_src\cb')
 git = repo.git
-git.execute('git fetch origin master')
+#git.execute('git fetch origin master')
 #git.execute('git reset --hard origin/master')
 
 # os.chdir('\\workdir_yuqi\git_src\cb')
