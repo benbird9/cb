@@ -29,7 +29,7 @@ jdf = pd.DataFrame.from_dict(cbonds)        # jisilu df
 jdf.bond_id = jdf.bond_id.astype(str)
 
 #origin raw data
-rdf = jdf.loc[(~jdf.bond_nm.str.contains('EB'))&(jdf.price!='100.000'), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','year_left', 'pb', 'curr_iss_amt',  'convert_cd']]
+rdf = jdf.loc[(~jdf.bond_nm.str.contains('EB'))&(jdf.price!='100.000')&(jdf.force_redeem.isnull()), ['bond_id', 'bond_nm', 'increase_rt', 'price', 'sincrease_rt', 'premium_rt', 'adj_scnt', 'ytm_rt',  'rating_cd','year_left', 'pb', 'curr_iss_amt',  'convert_cd']]
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
