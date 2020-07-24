@@ -8,10 +8,10 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-SELECT_RANGE = 40
-TOP_RANGE = 18
+SELECT_RANGE = 50
+TOP_RANGE = 21
 PB_THRESHOLD = 0.0
-ISSUE_AMT_THRESHOLD = 2.0
+ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
 FACTOR = 0.75   # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
