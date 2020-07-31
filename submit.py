@@ -15,5 +15,5 @@ result = subprocess.check_output('python SortBySumOfPrinceAndPremium.py', shell=
 
 
 git.execute('git add -A')
-git.execute('git commit -m "TODAY + ' ' + result + "')
+git.execute('git commit -m "'+ TODAY + ' ' + str(result) + '"')
 git.execute('git push')
