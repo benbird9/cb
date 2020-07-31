@@ -108,10 +108,10 @@ buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
 buy_df = rdf.loc[rdf.bond_id.isin(buy_bonds), :]
 
-print 'sell:'
-print sell_df
-print 'buy:'
-print buy_df
+print('sell:')
+print(sell_df)
+print('buy:')
+print(buy_df)
 
 special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt']]
 plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
