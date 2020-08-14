@@ -8,7 +8,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-SELECT_RANGE = 80
+SELECT_RANGE = 66
 TOP_RANGE = 25
 PB_THRESHOLD = 0.0
 ISSUE_AMT_THRESHOLD = 0.0
