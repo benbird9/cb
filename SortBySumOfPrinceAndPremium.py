@@ -101,6 +101,7 @@ top18_defence = set(rdf18_defence.bond_id.tolist())
 top18 = set(rdf18.bond_id.tolist())
 
 # target_bonds = top18_attack
+# target_bonds = top18
 target_bonds = top18_defence
 # target_bonds = top18
 sell_bonds = exist_bonds - target_bonds
