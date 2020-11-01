@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 SELECT_RANGE = 66
 TOP_RANGE = 26
-PB_THRESHOLD = 1.3
+PB_THRESHOLD = 1.0
 ISSUE_AMT_THRESHOLD = 1.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
 FACTOR = 1.0   # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
