@@ -33,12 +33,12 @@ rdf = jdf.loc[(~jdf.bond_nm.str.contains('EB'))&(jdf.price!='100.000')&(jdf.forc
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
-rdf.ytm_rt = rdf.ytm_rt.astype('float')
+# rdf.ytm_rt = rdf.ytm_rt.astype('float')
 rdf.sincrease_rt = rdf.sincrease_rt.apply(lambda s: s if '%' in s else '0.0%')
 rdf.sincrease_rt = rdf.sincrease_rt.apply(lambda s: s.replace('%', ''))
 rdf.sincrease_rt = rdf.sincrease_rt.astype('float')
 rdf.premium_rt = rdf.apply(lambda r: round(r.premium_rt, 2), axis=1)
-rdf.ytm_rt = rdf.apply(lambda r: round(r.ytm_rt, 2), axis=1)
+# rdf.ytm_rt = rdf.apply(lambda r: round(r.ytm_rt, 2), axis=1)
 rdf.year_left = rdf.year_left.astype('float')
 rdf.price = rdf.price.astype('float')
 rdf.pb = rdf.pb.astype('float')
@@ -78,7 +78,7 @@ exist_bonds = set([x.strip() for x in exist_bonds])
 exist_df = rdf.loc[rdf.bond_id.isin(exist_bonds), :]
 exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
-exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
+# exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
 
 replica_rdf.to_csv('output/jsl.rlst.csv', encoding='utf-8')
@@ -103,7 +103,6 @@ top18 = set(rdf18.bond_id.tolist())
 # target_bonds = top18_attack
 # target_bonds = top18
 target_bonds = top18_defence
-# target_bonds = top18
 sell_bonds = exist_bonds - target_bonds
 buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
