@@ -8,8 +8,8 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-SELECT_RANGE = 100
-TOP_RANGE = 39
+SELECT_RANGE = 130
+TOP_RANGE = 40
 PB_THRESHOLD = 0.0
 ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
