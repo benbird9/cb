@@ -1,7 +1,7 @@
 import tushare as ts
 
 print('bond\thigh\tlow')
-with open('../trade/cb.txt') as f:
+with open('../trade/190416cb.txt') as f:
     for bond in f:
         try:
             df = ts.get_hist_data(bond.strip(), ktype='M',pause=5)
