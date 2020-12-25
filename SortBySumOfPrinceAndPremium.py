@@ -8,12 +8,12 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-SELECT_RANGE = 100
-TOP_RANGE = 26
-PB_THRESHOLD = 1.0
-ISSUE_AMT_THRESHOLD = 1.0
+SELECT_RANGE = 130
+TOP_RANGE = 40
+PB_THRESHOLD = 0.0
+ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
-FACTOR = 1.0   # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
+FACTOR = 0.75  # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -33,12 +33,12 @@ rdf = jdf.loc[(~jdf.bond_nm.str.contains('EB'))&(jdf.price!='100.000')&(jdf.forc
 rdf.premium_rt = rdf.premium_rt.apply(lambda s: s.replace('%', ''))
 rdf.premium_rt = rdf.premium_rt.astype('float')
 rdf.ytm_rt = rdf.ytm_rt.apply(lambda s: s.replace('%', ''))
-# rdf.ytm_rt = rdf.ytm_rt.astype('float')
+rdf.ytm_rt = rdf.ytm_rt.astype('float',errors='ignore')
 rdf.sincrease_rt = rdf.sincrease_rt.apply(lambda s: s if '%' in s else '0.0%')
 rdf.sincrease_rt = rdf.sincrease_rt.apply(lambda s: s.replace('%', ''))
 rdf.sincrease_rt = rdf.sincrease_rt.astype('float')
 rdf.premium_rt = rdf.apply(lambda r: round(r.premium_rt, 2), axis=1)
-# rdf.ytm_rt = rdf.apply(lambda r: round(r.ytm_rt, 2), axis=1)
+rdf.ytm_rt = rdf.apply(lambda r: round(r.ytm_rt, 2) if r.ytm_rt.isnumeric() else 0, axis=1)
 rdf.year_left = rdf.year_left.astype('float')
 rdf.price = rdf.price.astype('float')
 rdf.pb = rdf.pb.astype('float')
@@ -78,7 +78,7 @@ exist_bonds = set([x.strip() for x in exist_bonds])
 exist_df = rdf.loc[rdf.bond_id.isin(exist_bonds), :]
 exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
-# exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
+exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
 
 replica_rdf.to_csv('output/jsl.rlst.csv', encoding='utf-8')
@@ -103,6 +103,7 @@ top18 = set(rdf18.bond_id.tolist())
 # target_bonds = top18_attack
 # target_bonds = top18
 target_bonds = top18_defence
+# target_bonds = top18
 sell_bonds = exist_bonds - target_bonds
 buy_bonds = target_bonds - exist_bonds
 sell_df = rdf.loc[rdf.bond_id.isin(sell_bonds), :]
@@ -117,7 +118,7 @@ special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt
 plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
 plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
 plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
-plt.axis([90, 160, -10, 40])
+plt.axis([80, 180, -10, 80])
 plt.title(datetime.now().strftime("%Y-%m-%d %I:%M:%S"))
 plt.xlabel('price')
 plt.ylabel('premium_ratio')
