@@ -13,7 +13,7 @@ TOP_RANGE = 40
 PB_THRESHOLD = 0.0
 ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
-FACTOR = 0.75  # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
+FACTOR = 0.5  # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
