@@ -8,8 +8,8 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-SELECT_RANGE = 130
-TOP_RANGE = 40
+SELECT_RANGE = 150
+TOP_RANGE = 46
 PB_THRESHOLD = 0.0
 ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
@@ -118,7 +118,7 @@ special_rdf = rdf.loc[~rdf.convert_cd.str.startswith('1'), ['price', 'premium_rt
 plt.plot(rdf['price'], rdf['premium_rt'], 'b+')
 plt.plot(special_rdf['price'], special_rdf['premium_rt'], 'bx')
 plt.plot(exist_df['price'], exist_df['premium_rt'], 'ro')
-plt.axis([80, 180, -10, 80])
+plt.axis([70, 180, -20, 100])
 plt.title(datetime.now().strftime("%Y-%m-%d %I:%M:%S"))
 plt.xlabel('price')
 plt.ylabel('premium_ratio')
