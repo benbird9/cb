@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 SELECT_RANGE = 150
-TOP_RANGE = 46
+TOP_RANGE = 45
 PB_THRESHOLD = 0.0
 ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
