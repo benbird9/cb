@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 
 SELECT_RANGE = 150
 TOP_RANGE = 50
-PB_THRESHOLD = 0.0
+PB_THRESHOLD = 1.0
 ISSUE_AMT_THRESHOLD = 0.0
 TODAY = datetime.today().strftime('%Y-%m-%d')
-FACTOR = 0.0  # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
+FACTOR = 0.5  # define the prediction of market. eg. 1 UNKONW, 0.75 WORRY, 1.5 EXCITED
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -80,6 +80,8 @@ exist_df.loc['TOTAL', 'price'] = exist_df.price.mean()
 exist_df.loc['TOTAL', 'premium_rt'] = exist_df.premium_rt.mean()
 exist_df.loc['TOTAL','ytm_rt'] = exist_df.ytm_rt.mean()
 exist_df.loc['TOTAL','sincrease_rt'] = exist_df.sincrease_rt.mean()
+exist_df.loc['TOTAL','pb'] = exist_df.pb.mean()
+exist_df.loc['TOTAL','year_left'] = exist_df.year_left.mean()
 
 replica_rdf.to_csv('output/jsl.rlst.csv', encoding='utf-8')
 rdf18_attack.to_csv('output/jsl.attack.18.csv', encoding='utf-8')
